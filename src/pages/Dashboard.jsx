@@ -4,6 +4,7 @@ import FollowButton from "../components/FollowButton";
 import { Link } from "react-router-dom";
 import FollowingList from "../components/FollowingList";
 import toast from "react-hot-toast";
+import ActivityLogs from "../components/ActivityLogs";
 
 const API = "http://localhost:5000/api/profile";
 
@@ -132,6 +133,12 @@ export default function Dashboard() {
             >
               Discover Users
             </Link>
+
+            <button
+              className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
+            >
+              Monitoring
+            </button>
           </div>
         </div>
 
@@ -240,6 +247,7 @@ export default function Dashboard() {
         </div>
 
         <FollowingList />
+        <ActivityLogs />
       </div>
     </div>
   );
