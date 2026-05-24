@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import FollowButton from "../components/FollowButton";
+import { Link } from "react-router-dom";
+import FollowingList from "../components/FollowingList";
 
 const API = "http://localhost:5000/api/profile";
 
@@ -91,93 +94,106 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-gray-500">
-        Loading...
+      <div className="min-h-screen flex items-center justify-center text-gray-500 text-sm">
+        Loading profile...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden">
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-5xl mx-auto">
+        
+        {/* HEADER */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 relative">
+          <div className="flex items-start justify-between">
+            
+            <div>
+              <h1 className="text-xl font-semibold text-gray-900">
+                Dashboard
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Manage your profile and account settings
+              </p>
+            </div>
 
-        <div className="h-40 bg-gradient-to-r from-indigo-600 to-purple-600 relative">
-
-          <div className="absolute bottom-5 left-8">
-            <h1 className="tracking-wide">
-              Dashboard
-            </h1>
-            <p className="text-indigo-100 text-sm mt-1">
-              Manage your account profile & settings
-            </p>
+            {/* <FollowButton userId={profile.id} /> */}
+            <Link
+              to="/users"
+              className="px-4 py-2 text-sm bg-gray-900 text-white rounded-lg hover:bg-black"
+            >
+              Discover Users
+            </Link>
           </div>
-
         </div>
 
-        <div className="p-8 -mt-16 relative">
+        {/* PROFILE CARD */}
+        <div className="bg-white border border-gray-200 rounded-2xl mt-6 p-6">
+          
+          {/* TOP SECTION */}
+          <div className="flex items-center justify-between">
+            
+            <div className="flex items-center gap-4">
+              <img
+                src={
+                  profile.avatar ||
+                  `https://ui-avatars.com/api/?name=${profile.fullName}`
+                }
+                className="w-20 h-20 rounded-full border border-gray-200"
+              />
 
-          {!editMode && (
-            <button
-              onClick={() => setEditMode(true)}
-              className="absolute top-6 right-6 px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700"
-            >
-              Edit Profile
-            </button>
-          )}
-
-          <div className="flex items-center gap-5">
-            <img
-              src={
-                profile.avatar ||
-                `https://ui-avatars.com/api/?name=${profile.fullName}`
-              }
-              className="w-28 h-28 rounded-full border-4 border-white shadow"
-            />
-
-            <div className="w-full">
-              {editMode ? (
-                <input
-                  name="fullName"
-                  value={form.fullName}
-                  onChange={handleChange}
-                  className="text-2xl font-bold w-full border-b outline-none bg-transparent"
-                />
-              ) : (
-                <h1 className="text-3xl font-bold">
-                  {profile.fullName}
-                </h1>
-              )}
-
-              {editMode ? (
-                <input
-                  name="headline"
-                  value={form.headline}
-                  onChange={handleChange}
-                  className="w-full border-b outline-none text-gray-600 mt-1"
-                />
-              ) : (
-                <p className="text-gray-600 mt-1">
-                  {profile.headline || "No headline"}
-                </p>
-              )}
+              <div>
+                {!editMode ? (
+                  <>
+                    <h2 className="text-lg font-semibold text-gray-900">
+                      {profile.fullName}
+                    </h2>
+                    <p className="text-sm text-gray-500">
+                      {profile.headline || "No headline"}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <input
+                      name="fullName"
+                      value={form.fullName}
+                      onChange={handleChange}
+                      className="text-lg font-semibold border-b outline-none w-full"
+                    />
+                    <input
+                      name="headline"
+                      value={form.headline}
+                      onChange={handleChange}
+                      className="text-sm text-gray-500 border-b outline-none w-full mt-1"
+                    />
+                  </>
+                )}
+              </div>
             </div>
+
+            {!editMode && (
+              <button
+                onClick={() => setEditMode(true)}
+                className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Edit
+              </button>
+            )}
           </div>
 
-          {/* FORM GRID */}
-          <div className="mt-8 grid grid-cols-2 gap-6">
-
+          {/* GRID */}
+          <div className="grid grid-cols-2 gap-4 mt-6">
             <Field label="Company" name="company" editMode={editMode} form={form} onChange={handleChange} />
             <Field label="Location" name="location" editMode={editMode} form={form} onChange={handleChange} />
             <Field label="Website" name="website" editMode={editMode} form={form} onChange={handleChange} />
             <Field label="GitHub" name="github" editMode={editMode} form={form} onChange={handleChange} />
             <Field label="LinkedIn" name="linkedin" editMode={editMode} form={form} onChange={handleChange} />
             <Field label="Skills" name="skills" editMode={editMode} form={form} onChange={handleChange} />
-
           </div>
 
           {/* BIO */}
           <div className="mt-6">
-            <h3 className="font-semibold mb-2">Bio</h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Bio</h3>
 
             {editMode ? (
               <textarea
@@ -185,22 +201,21 @@ export default function Dashboard() {
                 value={form.bio}
                 onChange={handleChange}
                 rows="4"
-                className="w-full border rounded-xl p-3"
+                className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
               />
             ) : (
-              <p className="text-gray-600">
+              <p className="text-sm text-gray-600 leading-relaxed">
                 {profile.bio || "No bio added"}
               </p>
             )}
           </div>
 
-          {/* BOTTOM ACTIONS */}
+          {/* ACTIONS */}
           {editMode && (
-            <div className="flex justify-end gap-4 mt-10">
-
+            <div className="flex justify-end gap-3 mt-6">
               <button
                 onClick={cancelEdit}
-                className="px-5 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl"
+                className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
               >
                 Cancel
               </button>
@@ -208,15 +223,15 @@ export default function Dashboard() {
               <button
                 onClick={saveProfile}
                 disabled={saving}
-                className="px-5 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-xl"
+                className="px-4 py-2 text-sm bg-gray-900 text-white rounded-lg hover:bg-black"
               >
                 {saving ? "Saving..." : "Save Changes"}
               </button>
-
             </div>
           )}
-
         </div>
+
+        <FollowingList />
       </div>
     </div>
   );
@@ -225,18 +240,18 @@ export default function Dashboard() {
 /* FIELD COMPONENT */
 function Field({ label, name, form, onChange, editMode }) {
   return (
-    <div className="bg-gray-50 p-4 rounded-2xl">
-      <h3 className="font-semibold mb-1">{label}</h3>
+    <div className="border border-gray-100 bg-gray-50 rounded-xl p-4">
+      <h3 className="text-xs font-medium text-gray-500 mb-1">{label}</h3>
 
       {editMode ? (
         <input
           name={name}
           value={form[name] || ""}
           onChange={onChange}
-          className="w-full border rounded-lg px-3 py-2"
+          className="w-full bg-transparent border-b border-gray-300 outline-none text-sm"
         />
       ) : (
-        <p className="text-gray-600">{form[name] || "-"}</p>
+        <p className="text-sm text-gray-700">{form[name] || "-"}</p>
       )}
     </div>
   );
