@@ -34,17 +34,19 @@ export default function EditProfile() {
     });
   };
 
-  const saveProfile = async (e) => {
+    const saveProfile = async (e) => {
     e.preventDefault();
 
     await axios.put(
-      "http://localhost:5000/api/profile/update",
-      form,
-      { withCredentials: true }
+        "http://localhost:5000/api/profile/update",
+        form,
+        { withCredentials: true }
     );
 
     alert("Profile updated");
-  };
+
+    window.location.href = "/dashboard";
+    };
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
