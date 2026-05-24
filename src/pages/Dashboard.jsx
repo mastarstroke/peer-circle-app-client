@@ -133,12 +133,6 @@ export default function Dashboard() {
             >
               Discover Users
             </Link>
-
-            <button
-              className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
-            >
-              Monitoring
-            </button>
           </div>
         </div>
 
