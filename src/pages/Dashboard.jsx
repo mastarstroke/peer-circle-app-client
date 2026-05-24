@@ -3,6 +3,7 @@ import axios from "axios";
 import FollowButton from "../components/FollowButton";
 import { Link } from "react-router-dom";
 import FollowingList from "../components/FollowingList";
+import toast from "react-hot-toast";
 
 const API = "http://localhost:5000/api/profile";
 
@@ -60,7 +61,7 @@ export default function Dashboard() {
       [e.target.name]: e.target.value,
     }));
   };
-
+  
   const saveProfile = async () => {
     try {
       setSaving(true);
@@ -70,7 +71,14 @@ export default function Dashboard() {
       });
 
       setProfile(res.data.user);
+
+      toast.success("Profile updated successfully");
+
       setEditMode(false);
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message || "Failed to update profile"
+      );
     } finally {
       setSaving(false);
     }
