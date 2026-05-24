@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 
 const API = "http://localhost:5000/api/logs";
 
@@ -13,7 +13,7 @@ export default function ActivityLogs() {
 
   const fetchLogs = async () => {
     try {
-      const res = await axios.get(`${API}/me`, {
+      const res = await api.get(`${API}/me`, {
         withCredentials: true,
       });
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 
 export default function EditProfile() {
   const [form, setForm] = useState({
@@ -19,7 +19,7 @@ export default function EditProfile() {
   }, []);
 
   const fetchProfile = async () => {
-    const res = await axios.get(
+    const res = await api.get(
       "http://localhost:5000/api/profile/me",
       { withCredentials: true }
     );
@@ -37,7 +37,7 @@ export default function EditProfile() {
     const saveProfile = async (e) => {
     e.preventDefault();
 
-    await axios.put(
+    await api.put(
         "http://localhost:5000/api/profile/update",
         form,
         { withCredentials: true }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 import FollowButton from "../components/FollowButton";
 import { Link } from "react-router-dom";
 import FollowingList from "../components/FollowingList";
@@ -34,7 +34,7 @@ export default function Dashboard() {
     try {
       setLoading(true);
 
-      const res = await axios.get(`${API}/me`, {
+      const res = await api.get(`${API}/me`, {
         withCredentials: true,
       });
 
@@ -67,7 +67,7 @@ export default function Dashboard() {
     try {
       setSaving(true);
 
-      const res = await axios.put(`${API}/update`, form, {
+      const res = await api.put(`${API}/update`, form, {
         withCredentials: true,
       });
 

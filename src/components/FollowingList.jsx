@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 
 const API = "http://localhost:5000/api/relationships";
 
@@ -11,7 +11,7 @@ export default function FollowingList() {
   }, []);
 
   const fetchFollowing = async () => {
-    const res = await axios.get(`${API}/following`, {
+    const res = await api.get(`${API}/following`, {
       withCredentials: true,
     });
 

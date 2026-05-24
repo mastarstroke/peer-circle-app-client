@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 import UserCard from "../components/UserCard";
 
 const API = "http://localhost:5000/api/relationships";
@@ -12,7 +12,7 @@ export default function Users() {
   }, []);
 
   const fetchUsers = async () => {
-    const res = await axios.get(`${API}/users`, {
+    const res = await api.get(`${API}/users`, {
       withCredentials: true,
     });
 

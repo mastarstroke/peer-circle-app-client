@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 import FollowButton from "../components/FollowButton";
 
 const API = "http://localhost:5000/api/users";
@@ -12,7 +12,7 @@ export default function Users() {
   }, []);
 
   const fetchUsers = async () => {
-    const res = await axios.get(API, { withCredentials: true });
+    const res = await api.get(API, { withCredentials: true });
     setUsers(res.data);
   };
 

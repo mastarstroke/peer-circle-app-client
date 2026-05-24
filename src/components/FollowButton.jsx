@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 import toast from "react-hot-toast";
 
 const API = "http://localhost:5000/api/relationships";
@@ -12,7 +12,7 @@ export default function FollowButton({ userId }) {
   }, []);
 
   const fetchStatus = async () => {
-    const res = await axios.get(`${API}/following`, {
+    const res = await api.get(`${API}/following`, {
       withCredentials: true,
     });
 
@@ -23,7 +23,7 @@ export default function FollowButton({ userId }) {
   const toggleFollow = async () => {
     try {
       if (isFollowing) {
-        await axios.post(
+        await api.post(
           `${API}/unfollow`,
           { userId },
           { withCredentials: true }
@@ -33,7 +33,7 @@ export default function FollowButton({ userId }) {
 
         toast.success("User unfollowed");
       } else {
-        await axios.post(
+        await api.post(
           `${API}/follow`,
           { userId },
           { withCredentials: true }
